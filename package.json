@@ -2,10 +2,11 @@
   "name": "property-se-middleend",
   "version": "1.0.0",
   "description": "",
-  "main": "init.js",
+  "main": "app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./init.js"
+    "start": "node app.js",
+    "dev": "npx nodemon"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +16,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
