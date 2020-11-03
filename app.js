@@ -1,39 +1,38 @@
-//DEPENDENCIES DECLARATION
+// Import native node modules
 import path from "path";
-import pkg_express from "express";
-import pkg_file_upload from "express-fileupload";
-import pkg_body_parser from "body-parser";
-import pkg_cors from "cors";
-import { config } from "./src/config/app-config.js";
-//DEPENDENCIES DECLARATION
 
-//EXPRESS MODULES USING
-const app = pkg_express();
+// Import dependencies
+import express from "express";
+import cors from "cors";
+import fileupload from "express-fileupload"; // needed?
 
-app.use(pkg_file_upload());
-app.use(pkg_body_parser.json());
-app.use(pkg_body_parser.urlencoded({ extended: true }));
-app.use(pkg_express.static(path.resolve() + "/public"));
-app.use(pkg_cors({ origin: "http://localhost:8080" }));
+// Import config object
+import config from "./src/config/app-config.js";
+
+// Import routers
+import router from "./src/router/main.js";
+
+const app = express();
+
+// Middlewares
+app.use(cors({ origin: config.app.clientDomain }));
+app.use(express.json());
+
+app.use(fileupload()); // needed?
+
+// Problems with CORS in Firefox?
 app.all("*", (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
-//EXPRESS MODULES USING
 
-//CONTROLLER OBJECTS
-import router from "./src/router/main.js";
-//CONTROLLERS OBJECT
+app.use("/", router);
 
-//ROUTER CALL
-router(app);
+// Allow "public" folder to serve static files
+app.use(express.static(path.resolve() + "/public"));
 
-//START DATABASE AND RUN SERVER
-app.listen(config().PORT, () =>
-  console.log(
-    "\n#### Server running nice and steady! Make requests to >> localhost:" +
-      config().PORT +
-      " << #####"
-  )
-);
+// Run server
+app.listen(config.app.port, () => {
+  console.log(`Server started on port ${config.app.port}...`);
+});
