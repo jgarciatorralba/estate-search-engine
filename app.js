@@ -10,7 +10,7 @@ import fileupload from "express-fileupload"; // needed?
 import config from "./src/config/app-config.js";
 
 // Import routers
-import router from "./src/router/main.js";
+import authRouter from "./src/routers/auth.js";
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use(fileupload()); // needed?
 //   next();
 // });
 
-app.use("/", router);
+app.use("/", authRouter);
 
 // Allow "public" folder to serve static files
 app.use(express.static(path.resolve() + "/public"));
