@@ -1,61 +1,29 @@
-import dotenv from 'dotenv';
-import path from 'path';
+// Import native node modules
+import fs from "fs";
+// Import dependencies
+import dotenv from "dotenv";
 
-dotenv.config();
+const result = dotenv.config();
 
-export const config = () => {
-    const MODE = process.env.NODE_ENV || 'production';
-
-    const config = {
-        test: {
-            MODE: 'test',
-            PORT: Number(process.env.PORT),
-            PUBLIC_PATH: path.resolve('public'),
-            SESSION_COOKIE: process.env.SESSION_COOKIE,
-            API_KEY: process.env.API_KEY,
-            PWD_ENCR: process.env.PWD_ENCR,
-            SECRET: process.env.SECRET,
-            db:{
-                HOST: process.env.DB_HOST,
-                NAME: process.env.DB_NAME,
-                USER: process.env.DB_USER,
-                PWD: process.env.DB_PWD,
-                PORT: Number(process.env.DB_PORT)
-            }
-        },
-        production: {
-            MODE: 'production',
-            PORT: Number(process.env.PORT),
-            PUBLIC_PATH: path.resolve('public'),
-            SESSION_COOKIE: process.env.SESSION_COOKIE,
-            API_KEY: process.env.API_KEY,
-            PWD_ENCR: process.env.PWD_ENCR,
-            SECRET: process.env.SECRET,
-            db:{
-                HOST: process.env.DB_HOST,
-                NAME: process.env.DB_NAME,
-                USER: process.env.DB_USER,
-                PWD: process.env.DB_PWD,
-                PORT: Number(process.env.DB_PORT)
-            }
-        },
-        development: {
-            MODE: 'development',
-            PORT: Number(process.env.PORT),
-            PUBLIC_PATH: path.resolve('public'),
-            SESSION_COOKIE: process.env.SESSION_COOKIE,
-            API_KEY: process.env.API_KEY,
-            PWD_ENCR: process.env.PWD_ENCR,
-            SECRET: process.env.SECRET,
-            db:{
-                HOST: process.env.DB_HOST,
-                NAME: process.env.DB_NAME,
-                USER: process.env.DB_USER,
-                PWD: process.env.DB_PWD,
-                PORT: Number(process.env.DB_PORT)
-            }
-        }
-    };
-
-    return config[MODE];
+if (result.error) {
+  console.log("⚠️ Couldn't find .env file, creating one from .env.example");
+  fs.copyFileSync(".env.example", ".env");
+  dotenv.config();
 }
+
+export default {
+  app: {
+    port: parseInt(process.env.APP_PORT),
+    saltRounds: parseInt(process.env.SALT_ROUNDS),
+    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
+    serverDomain: process.env.SERVER_DOMAIN,
+    clientDomain: process.env.CLIENT_DOMAIN,
+  },
+  db: {
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT),
+    user: process.env.DB_USER,
+    pass: process.env.DB_PASS,
+    name: process.env.DB_NAME,
+  },
+};
