@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 
 const ClientSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
+    unique: true,
   },
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -23,4 +25,6 @@ const ClientSchema = new mongoose.Schema({
   },
 });
 
-export const Client = mongoose.model("Client", ClientSchema);
+const Client = mongoose.model("Client", ClientSchema);
+
+export default Client;
