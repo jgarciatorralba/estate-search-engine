@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // Import models
-import User from "../models/user.js";
+// import User from "../models/user.js";
 
 // Import config object
 import config from "../config/app-config.js";
