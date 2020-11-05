@@ -23,7 +23,7 @@ const ClientSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: null,
+    default: "default.jpg",
   },
 });
 
