@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // Import models
-// import User from "../models/user.js";
+import Client from "../models/Client.js";
 
 // Import config object
 import config from "../config/app-config.js";
@@ -27,38 +27,36 @@ router.post("/register", async (req, res) => {
       .json({ data: null, error: "Bad Request: Missing password attribute" });
   }
 
-  if (req.body.name == null) {
+  if (req.body.username == null) {
     return res
       .status(400)
       .json({ data: null, error: "Bad Request: Missing name attribute" });
   }
 
-  const user = {
+  const newClient = new Client({
     email: req.body.email,
     password: await bcrypt.hash(req.body.password, config.app.saltRounds),
-    name: req.body.name,
-    balance: config.app.initialBalance,
-  };
+    username: req.body.username,
+  });
 
   try {
-    await User.create(user);
+    await newClient.save();
   } catch (error) {
-    if (error.name == "SequelizeUniqueConstraintError") {
-      const duplicateKey = error.errors[0].path;
-      if (duplicateKey === "email")
+    if (error.name == "MongoError") {
+      if (Object.keys(error.keyValue).includes("email"))
         return res
           .status(400)
-          .json({ data: null, error: "Email already taken" });
-      if (duplicateKey === "name")
+          .json({ data: null, error: "That email is already taken" });
+      if (Object.keys(error.keyValue).includes("username"))
         return res
           .status(400)
-          .json({ data: null, error: "Username already taken" });
+          .json({ data: null, error: "That username is already taken" });
     }
     return res.status(500).json({ data: null, error: "Internal Server Error" });
   }
 
   res.json({
-    data: "Congratulation, you have successfully registered!",
+    data: "Congratulations, you have been successfully registered!",
     error: null,
   });
 });
@@ -78,35 +76,34 @@ router.post("/login", async (req, res) => {
       .json({ data: null, error: "Bad Request: Missing password attribute" });
   }
 
-  const user = await User.findOne({ where: { email: credentials.email } });
-  if (user == null)
-    return res.status(400).json({ data: null, error: "Email doesn't exists" });
+  const client = await Client.findOne({ email: credentials.email });
+  if (client == null)
+    return res
+      .status(400)
+      .json({ data: null, error: "That email doesn't exist" });
 
-  const match = await bcrypt.compare(credentials.password, user.password);
+  const match = await bcrypt.compare(credentials.password, client.password);
   if (!match)
-    return res.status(400).json({ data: null, error: "Incorrect password" });
+    return res.status(400).json({ data: null, error: "Password incorrect" });
 
   const accessToken = jwt.sign(
-    { id: user.user_id, role: user.role },
+    { id: client._id },
     config.app.accessTokenSecret
   );
 
   const data = {
     accessToken: accessToken,
-    user: {
-      email: user.email,
-      name: user.name,
-      avatar: user.avatar
-        ? "http://" +
-          path.posix.join(config.app.serverDomain, "avatar", user.avatar)
+    client: {
+      email: client.email,
+      username: client.username,
+      avatar: client.avatar
+        ? path.posix.join(
+            config.app.serverDomain,
+            "public",
+            "img",
+            client.avatar
+          )
         : null,
-      role: user.role,
-      walletBalance: user.balance,
-      walletEstimated: user.estimated,
-      walletTotal: user.balance + user.estimated,
-      mostBought: "Bitcoin",
-      mostBoughtSymbol: "BTC",
-      ranking: user.ranking,
     },
   };
 
