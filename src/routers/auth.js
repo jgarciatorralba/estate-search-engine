@@ -42,6 +42,11 @@ router.post("/register", async (req, res) => {
   try {
     await newClient.save();
   } catch (error) {
+    if (error.name == "ValidationError") {
+      return res
+        .status(400)
+        .json({ data: null, error: error.errors["email"].message });
+    }
     if (error.name == "MongoError") {
       if (Object.keys(error.keyValue).includes("email"))
         return res
