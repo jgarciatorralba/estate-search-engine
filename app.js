@@ -8,7 +8,6 @@ import cors from "cors";
 // Import project files
 import config from "./src/config/app-config.js";
 import Database from "./src/database/connection.js";
-
 import authRouter from "./src/routers/auth.js";
 
 const app = express();
