@@ -1,0 +1,17 @@
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "email" : "ch.callau@gmail.com",
+  "username" : "Christian",
+  "password" : "123456"
+}
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "email" : "ch.callau@gmail.com",
+  "password" : "123456"
+}
