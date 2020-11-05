@@ -4,7 +4,6 @@ import path from "path";
 // Import dependencies
 import express from "express";
 import cors from "cors";
-import fileupload from "express-fileupload"; // needed?
 
 // Import config object
 import config from "./src/config/app-config.js";
@@ -17,8 +16,6 @@ const app = express();
 // Middlewares
 app.use(cors({ origin: config.app.clientDomain }));
 app.use(express.json());
-
-app.use(fileupload()); // needed?
 
 // Problems with CORS in Firefox?
 // app.all("*", (req, res, next) => {
