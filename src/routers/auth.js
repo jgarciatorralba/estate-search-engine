@@ -102,7 +102,7 @@ router.post("/login", async (req, res) => {
       email: client.email,
       username: client.username,
       avatar: client.avatar
-        ? path.posix.join(config.app.serverDomain, "img", client.avatar)
+        ? path.posix.join(config.app.serverDomain, "img", "user", client.avatar)
         : null,
     },
   };
