@@ -18,15 +18,10 @@ const db = new Database();
 db.connect();
 
 // Middlewares
-app.use(cors({ origin: config.app.clientDomain }));
+app.use(
+  cors({ origin: [config.app.clientDomain, config.app.laravelServerDomain] })
+);
 app.use(express.json());
-
-// Problems with CORS in Firefox?
-// app.all("*", (req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   next();
-// });
 
 app.use("/", authRouter);
 
