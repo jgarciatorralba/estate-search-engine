@@ -5,13 +5,17 @@ import path from "path";
 import express from "express";
 import cors from "cors";
 
-// Import config object
+// Import project files
 import config from "./src/config/app-config.js";
+import Database from "./src/database/connection.js";
 
-// Import routers
 import authRouter from "./src/routers/auth.js";
 
 const app = express();
+
+// DB Connection
+const db = new Database();
+db.connect();
 
 // Middlewares
 app.use(cors({ origin: config.app.clientDomain }));
