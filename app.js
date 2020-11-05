@@ -10,8 +10,6 @@ import config from "./src/config/app-config.js";
 import Database from "./src/database/connection.js";
 import authRouter from "./src/routers/auth.js";
 
-import crypto from "crypto";
-
 const app = express();
 
 // DB Connection
@@ -29,8 +27,6 @@ app.use("/", authRouter);
 
 // Allow "public" folder to serve static files
 app.use(express.static(path.resolve() + "/public"));
-
-console.log(crypto.randomBytes(32).toString("hex"));
 
 // Run server
 app.listen(config.app.port, () => {
