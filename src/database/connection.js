@@ -10,6 +10,7 @@ export default class {
           useNewUrlParser: true,
           useUnifiedTopology: true,
           retryWrites: true,
+          useCreateIndex: true,
           w: "majority",
         }
       )
