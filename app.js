@@ -23,6 +23,7 @@ app.use(
 );
 app.use(express.json());
 
+// Routers
 app.use("/", authRouter);
 
 // Allow "public" folder to serve static files
