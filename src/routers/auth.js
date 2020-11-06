@@ -85,7 +85,10 @@ router.post("/login", async (req, res) => {
   if (client == null)
     return res
       .status(400)
-      .json({ data: null, error: "That email doesn't exist" });
+      .json({
+        data: null,
+        error: "That email is not registered or was deactivated",
+      });
 
   const match = await bcrypt.compare(credentials.password, client.password);
   if (!match)
