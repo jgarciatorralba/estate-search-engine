@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const PropertySchema = new mongoose.Schema({
+const PurchaseSchema = new mongoose.Schema({
   buyer_id: {
     type: String,
     required: true,
@@ -96,6 +96,6 @@ const PropertySchema = new mongoose.Schema({
   },
 });
 
-const Property = mongoose.model("Property", PropertySchema);
+const Purchase = mongoose.model("Purchase", PurchaseSchema);
 
-export default Property;
+export default Purchase;
