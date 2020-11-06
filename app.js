@@ -16,7 +16,7 @@ const app = express();
 const db = new Database();
 db.connect();
 
-// Middlewares
+// General use middlewares
 app.use(
   cors({ origin: [config.app.clientDomain, config.app.laravelServerDomain] })
 );
