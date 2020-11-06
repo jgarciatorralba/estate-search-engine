@@ -1,10 +1,17 @@
+// Import native node modules
+import path from "path";
+
+// Import dependencies
 import express from "express";
 import bcrypt from "bcrypt";
+
+// Import models
+import Client from "../models/Client.js";
+
+// Import project files
+import config from "../config/app-config.js";
 import authMiddleware from "../middlewares/auth.js";
 import avatarMiddleware from "../middlewares/avatar.js";
-import Client from "../models/Client.js";
-import config from "../config/app-config.js";
-import path from "path";
 
 const router = express.Router();
 
