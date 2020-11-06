@@ -1,13 +1,23 @@
 import mongoose from "mongoose";
 
 const PropertySchema = new mongoose.Schema({
+  buyer_id: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
+    trim: true,
   },
   price: {
     type: Number,
     required: true,
+  },
+  currency: {
+    type: String,
+    enum: ["EUR", "USD"],
+    default: "EUR",
   },
   propertyType: {
     type: String,
