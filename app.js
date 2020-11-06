@@ -10,6 +10,8 @@ import config from "./src/config/app-config.js";
 import Database from "./src/database/connection.js";
 import authRouter from "./src/routers/auth.js";
 import clientRouter from "./src/routers/client.js";
+import purchaseRouter from "./src/routers/purchase.js";
+import propertyRouter from "./src/routers/property.js";
 
 const app = express();
 
@@ -26,6 +28,8 @@ app.use(express.json());
 // Routers
 app.use("/", authRouter);
 app.use("/client", clientRouter);
+app.use("/purchase", purchaseRouter);
+app.use("/property", propertyRouter);
 
 // Allow "public" folder to serve static files
 app.use(express.static(path.resolve() + "/public"));
