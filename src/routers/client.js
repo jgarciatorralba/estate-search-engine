@@ -21,10 +21,19 @@ router.get("/", async (req, res) => {
     "username",
     "avatar",
   ]);
-  client.avatar =
-    "http://" +
-    path.posix.join(config.app.nodeServerDomain, "img", "user", client.avatar);
-  res.json({ data: client, error: null });
+  if (client) {
+    client.avatar =
+      "http://" +
+      path.posix.join(
+        config.app.nodeServerDomain,
+        "img",
+        "user",
+        client.avatar
+      );
+    res.json({ data: client, error: null });
+  } else {
+    return res.status(400).json({ data: null, error: "Client not found" });
+  }
 });
 
 // Update a client
@@ -46,9 +55,13 @@ router.patch("/", avatarMiddleware.single("avatar"), async (req, res) => {
 
 // Delete a client
 router.delete("/", async (req, res) => {
-  const clientId = req.user.id;
-  await Client.deleteOne({ _id: clientId });
-  res.json({ data: "Client deleted!", error: null });
+  const client = await Client.findById(req.user.id);
+  if (client) {
+    await client.delete();
+    res.json({ data: "Client deleted!", error: null });
+  } else {
+    return res.status(400).json({ data: null, error: "Client not found" });
+  }
 });
 
 export default router;
