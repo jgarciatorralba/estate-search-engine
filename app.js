@@ -9,6 +9,7 @@ import cors from "cors";
 import config from "./src/config/app-config.js";
 import Database from "./src/database/connection.js";
 import authRouter from "./src/routers/auth.js";
+import clientRouter from "./src/routers/client.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 
 // Routers
 app.use("/", authRouter);
+app.use("/client", clientRouter);
 
 // Allow "public" folder to serve static files
 app.use(express.static(path.resolve() + "/public"));
