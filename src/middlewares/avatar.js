@@ -4,7 +4,13 @@ import path from "path";
 const storage = multer.diskStorage({
   destination: "./public/img/user/",
   filename: function (req, file, cb) {
-    cb(null, req.user.id + "-" + Date.now() + path.extname(file.originalname));
+    cb(
+      null,
+      path.parse(file.originalname).name +
+        "-" +
+        Date.now() +
+        path.extname(file.originalname)
+    );
   },
 });
 
