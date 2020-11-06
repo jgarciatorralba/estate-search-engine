@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import mongoose_delete from "mongoose-delete";
 
 const ClientSchema = new mongoose.Schema({
   username: {
@@ -25,6 +26,11 @@ const ClientSchema = new mongoose.Schema({
     type: String,
     default: "default.jpg",
   },
+});
+
+ClientSchema.plugin(mongoose_delete, {
+  deletedAt: true,
+  overrideMethods: true,
 });
 
 const Client = mongoose.model("Client", ClientSchema);
