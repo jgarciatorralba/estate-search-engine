@@ -49,8 +49,14 @@ router.patch("/", avatarMiddleware.single("avatar"), async (req, res) => {
   if (req.body.username && req.body.username !== "")
     updatedClient.username = req.body.username;
   if (req.file) updatedClient.avatar = req.file.filename;
-  await Client.updateOne({ _id: req.user.id }, updatedClient);
-  res.json({ data: "Client data updated!", error: null });
+
+  const deletedClient = await Client.findOneDeleted({ _id: req.user.id });
+  if (deletedClient) {
+    return res.status(400).json({ data: null, error: "Client not found" });
+  } else {
+    await Client.updateOne({ _id: req.user.id }, updatedClient);
+    res.json({ data: "Client data updated!", error: null });
+  }
 });
 
 // Delete a client
