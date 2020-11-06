@@ -16,7 +16,7 @@ export default {
     port: parseInt(process.env.APP_PORT),
     saltRounds: parseInt(process.env.SALT_ROUNDS),
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
-    staticApiToken: process.env.STATIC_API_TOKEN,
+    apiSecret: process.env.API_SECRET,
     nodeServerDomain: process.env.NODE_SERVER_DOMAIN,
     laravelServerDomain: process.env.LARAVEL_SERVER_DOMAIN,
     clientDomain: process.env.CLIENT_DOMAIN,
