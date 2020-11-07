@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "dev": "npx nodemon"
+    "dev": "npx nodemon",
+    "migrate": "node src/database/migration.js"
   },
   "author": "",
   "license": "ISC",
