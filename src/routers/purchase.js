@@ -11,6 +11,7 @@ import Client from "../models/Client.js";
 // Import project files
 import config from "../config/app-config.js";
 import backendMiddleware from "../middlewares/backend.js";
+import authMiddleware from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -66,6 +67,75 @@ router.get("/:client_id", backendMiddleware, async (req, res) => {
   } else {
     return res.status(400).json({ data: null, error: "Client not found" });
   }
+});
+
+// Post new purchase by client
+router.post("/", authMiddleware, async (req, res) => {
+  const buyer_id = req.user.id;
+  const description = req.body.description;
+  const price = req.body.price;
+  const images = req.body.images;
+  const services = req.body.services;
+  const location = req.body.location;
+  const publicationDate = Date.parse(req.body.publicationDate);
+  const propertyType = req.body.propertyType;
+  let homeType = "";
+  let numBedrooms = "";
+  let numBathrooms = "";
+  let equipment = "";
+  let condition = "";
+  let buildingUse = "";
+  if (propertyType == "Home") {
+    homeType = req.body.homeType;
+    numBedrooms = req.body.numBedrooms;
+    numBathrooms = req.body.numBathrooms;
+    equipment = req.body.equipment;
+    condition = req.body.condition;
+  } else if (propertyType == "Office") {
+    buildingUse = req.body.buildingUse;
+  }
+
+  let newPurchase;
+  if (propertyType == "Home") {
+    newPurchase = new Purchase({
+      buyer_id: buyer_id,
+      description: description,
+      price: price,
+      propertyType: propertyType,
+      images: images,
+      services: services,
+      location: location,
+      publicationDate: publicationDate,
+      homeType: homeType,
+      numBedrooms: numBedrooms,
+      numBathrooms: numBathrooms,
+      equipment: equipment,
+      condition: condition,
+    });
+  } else if (propertyType == "Office") {
+    newPurchase = new Purchase({
+      buyer_id: buyer_id,
+      description: description,
+      price: price,
+      propertyType: propertyType,
+      images: images,
+      services: services,
+      location: location,
+      publicationDate: publicationDate,
+      buildingUse: buildingUse,
+    });
+  }
+
+  try {
+    await newPurchase.save();
+  } catch (error) {
+    return res.status(400).json({ data: null, error: "Error: " + error });
+  }
+
+  res.json({
+    data: "Purchase was successfully registered.",
+    error: null,
+  });
 });
 
 export default router;
