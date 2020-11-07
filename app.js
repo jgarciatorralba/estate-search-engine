@@ -17,7 +17,10 @@ const app = express();
 
 // DB Connection
 const db = new Database();
-db.connect();
+const connPromise = db.connect();
+connPromise
+  .then((result) => console.log(result))
+  .catch((error) => console.log(error));
 
 // General use middlewares
 app.use(
