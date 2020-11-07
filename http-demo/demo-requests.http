@@ -64,12 +64,40 @@ DELETE http://localhost:3000/client
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
 Content-Type: application/json
 
-### Get all purchase history
+### Get all purchase history (use API secret instead of JWT)
 GET http://localhost:3000/purchase
 Authorization: Bearer 928e9861d5f1d573801e4dfd6178f55be55932627ac761944b8a66cbc7c95449
 Content-Type: application/json
 
-### Get purchase history by client id
+### Get purchase history by client id (use API secret instead of JWT)
 GET http://localhost:3000/purchase/5fa70d416c2310fdff0c80eb
 Authorization: Bearer 928e9861d5f1d573801e4dfd6178f55be55932627ac761944b8a66cbc7c95449
 Content-Type: application/json
+
+### Register new purchase by client
+POST http://localhost:3000/purchase
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcxNTE1YjE5M2QzMDFkYzQ1NjYxMiIsImlhdCI6MTYwNDc4NTQzOX0.9IlcKP5_lp2EMuyjB26M9W7EgIkMIIjYqp1SSY5eMGc
+Content-Type: application/json
+
+{
+  "description" : "Ut bibendum lobortis placerat. Nulla eu cursus nisi. Nullam posuere nec leo vitae commodo. Aenean ac lorem molestie, viverra ipsum non, varius risus. Ut blandit urna fermentum nibh porta, sit amet tincidunt urna consequat. Cras commodo nibh non lacus viverra eleifend. Suspendisse a laoreet mi. Nullam vulputate blandit nulla vel efficitur. In volutpat, diam vitae pharetra tincidunt, est erat rhoncus metus, at mollis nisi lorem et ex. Morbi facilisis sollicitudin varius. Mauris nec quam nisi. Vestibulum pharetra pellentesque tellus vel hendrerit. Duis eu tortor et eros ultricies viverra eu sit amet enim. Sed aliquet risus in ex varius condimentum. Pellentesque ut nunc eu mauris congue pretium. Duis sit amet sollicitudin felis.",
+  "price" : 1000000,
+  "images" : [
+    "https://cdn.pixabay.com/photo/2016/11/18/17/46/architecture-1836070_1280.jpg", "https://cdn.pixabay.com/photo/2018/01/24/15/08/live-3104077_1280.jpg"
+  ],
+  "services": [
+    "Garden",
+    "Swimming pool"
+  ],
+  "location": {
+    "latitude": 41.40340,
+    "longitude": 2.12772
+  },
+  "publicationDate": "Nov 7, 2020 12:00:00",
+  "propertyType": "Home",
+  "homeType": "Penthouse",
+  "numBedrooms": "4 or +",
+  "numBathrooms": "3 or +",
+  "equipment": "Furnished",
+  "condition": "New"
+}
