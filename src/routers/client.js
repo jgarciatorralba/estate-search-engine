@@ -61,8 +61,21 @@ router.patch("/", avatarMiddleware.single("avatar"), async (req, res) => {
   if (deletedClient) {
     return res.status(400).json({ data: null, error: "Client not found" });
   } else {
-    await Client.updateOne({ _id: req.user.id }, updatedClient);
-    res.json({ data: "Client data updated!", error: null });
+    try {
+      await Client.updateOne({ _id: req.user.id }, updatedClient);
+      res.json({ data: "Client data updated!", error: null });
+    } catch (error) {
+      if (error.name == "MongoError") {
+        if (Object.keys(error.keyValue).includes("email"))
+          return res
+            .status(400)
+            .json({ data: null, error: "That email is already taken" });
+        if (Object.keys(error.keyValue).includes("username"))
+          return res
+            .status(400)
+            .json({ data: null, error: "That username is already taken" });
+      }
+    }
   }
 });
 
