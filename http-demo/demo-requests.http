@@ -29,23 +29,23 @@ Content-Type: application/json
 
 ### Get an existing client
 GET http://localhost:3000/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTU0ZWRjOTdkMzhiMjBjYTZhOTIwNSIsImlhdCI6MTYwNDY2OTE1Nn0.2kp2iksuJgY_CNDpImJZYyBQVD8NABzcIWZuDeF9Fvc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
 Content-Type: application/json
 
 ### Update existing client
 PATCH http://localhost:3000/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTU0ZWRjOTdkMzhiMjBjYTZhOTIwNSIsImlhdCI6MTYwNDY2OTE1Nn0.2kp2iksuJgY_CNDpImJZYyBQVD8NABzcIWZuDeF9Fvc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
 Content-Type: application/json
 
 {
-  "username": "admin",
+  "username": "new_username_tester",
   "email": "testmail@mail.com",
   "password": "123456"
 }
 
 ### Update existing client's username and avatar
 PATCH http://localhost:3000/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTU0ZWRjOTdkMzhiMjBjYTZhOTIwNSIsImlhdCI6MTYwNDY2OTE1Nn0.2kp2iksuJgY_CNDpImJZYyBQVD8NABzcIWZuDeF9Fvc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -61,5 +61,15 @@ Content-Type: image/png
 
 ### Soft delete existing client
 DELETE http://localhost:3000/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTU0ZWRjOTdkMzhiMjBjYTZhOTIwNSIsImlhdCI6MTYwNDY2OTE1Nn0.2kp2iksuJgY_CNDpImJZYyBQVD8NABzcIWZuDeF9Fvc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
+Content-Type: application/json
+
+### Get all purchase history
+GET http://localhost:3000/purchase
+Authorization: Bearer 928e9861d5f1d573801e4dfd6178f55be55932627ac761944b8a66cbc7c95449
+Content-Type: application/json
+
+### Get purchase history by client id
+GET http://localhost:3000/purchase/5fa70d416c2310fdff0c80eb
+Authorization: Bearer 928e9861d5f1d573801e4dfd6178f55be55932627ac761944b8a66cbc7c95449
 Content-Type: application/json
