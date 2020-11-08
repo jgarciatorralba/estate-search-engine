@@ -29,12 +29,12 @@ Content-Type: application/json
 
 ### Get an existing client
 GET http://localhost:3000/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcxNTE1YjE5M2QzMDFkYzQ1NjYxMiIsImlhdCI6MTYwNDgzMjIyOX0._6SK4rYlHmBkTlwZn1Fp90n3jUBKj7clWAIV7Mu30IM
 Content-Type: application/json
 
 ### Update existing client
 PATCH http://localhost:3000/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcxNTE1YjE5M2QzMDFkYzQ1NjYxMiIsImlhdCI6MTYwNDgzMjIyOX0._6SK4rYlHmBkTlwZn1Fp90n3jUBKj7clWAIV7Mu30IM
 Content-Type: application/json
 
 {
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ### Update existing client's username and avatar
 PATCH http://localhost:3000/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcxNTE1YjE5M2QzMDFkYzQ1NjYxMiIsImlhdCI6MTYwNDgzMjIyOX0._6SK4rYlHmBkTlwZn1Fp90n3jUBKj7clWAIV7Mu30IM
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -61,7 +61,7 @@ Content-Type: image/png
 
 ### Soft delete existing client
 DELETE http://localhost:3000/client
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTZmZThlYjQ1ZmM2ZjNiNTViMWYzMCIsImlhdCI6MTYwNDc3OTY5MH0.tVttx2FNRWYjEVMcgGYOrIV8ZJTpa5WoqeqamTsywVM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcxNTE1YjE5M2QzMDFkYzQ1NjYxMiIsImlhdCI6MTYwNDgzMjIyOX0._6SK4rYlHmBkTlwZn1Fp90n3jUBKj7clWAIV7Mu30IM
 Content-Type: application/json
 
 ### Get all purchase history (use API secret instead of JWT)
