@@ -70,7 +70,7 @@ Authorization: Bearer 928e9861d5f1d573801e4dfd6178f55be55932627ac761944b8a66cbc7
 Content-Type: application/json
 
 ### Get purchase history by client id (use API secret instead of JWT)
-GET http://localhost:3000/purchase/5fa70d416c2310fdff0c80eb
+GET http://localhost:3000/purchase/5fa71515b193d301dc456612
 Authorization: Bearer 928e9861d5f1d573801e4dfd6178f55be55932627ac761944b8a66cbc7c95449
 Content-Type: application/json
 
