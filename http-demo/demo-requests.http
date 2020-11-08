@@ -23,7 +23,7 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "email" : "testmail@mail.com",
+  "email" : "admin@admin.com",
   "password" : "123456"
 }
 
@@ -101,3 +101,23 @@ Content-Type: application/json
   "equipment": "Furnished",
   "condition": "New"
 }
+
+### Get all properties
+GET http://localhost:3000/property
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcwZDQwNmMyMzEwZmRmZjBjODBlOSIsImlhdCI6MTYwNDg0MzY2NH0.PfE0X8DmzJrI_qjg-tt6xI4LghGVNCdQQ21xEWZgZk8
+Content-Type: application/json
+
+### Get newly created properties (last 24h)
+GET http://localhost:3000/property/new
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcwZDQwNmMyMzEwZmRmZjBjODBlOSIsImlhdCI6MTYwNDg0MzY2NH0.PfE0X8DmzJrI_qjg-tt6xI4LghGVNCdQQ21xEWZgZk8
+Content-Type: application/json
+
+### Get property details by its "id"
+GET http://localhost:3000/property/detail/whateverTheId
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcwZDQwNmMyMzEwZmRmZjBjODBlOSIsImlhdCI6MTYwNDg0MzY2NH0.PfE0X8DmzJrI_qjg-tt6xI4LghGVNCdQQ21xEWZgZk8
+Content-Type: application/json
+
+### Get properties with filters
+GET http://localhost:3000/property/filter?propertyType=Home&homeType=Flat/Apartment&numBedrooms=4+or+%2B&numBathrooms=3+or+%2B&equipment=Fully+fitted+kitchen&condition=Good+condition&minPrice=200000&maxPrice=500000&latitudeFrom=41&latitudeTo=42&longitudeFrom=2&longitudeTo=2.2&published=week&services=Lift&services=Garden
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcwZDQwNmMyMzEwZmRmZjBjODBlOSIsImlhdCI6MTYwNDg0MzY2NH0.PfE0X8DmzJrI_qjg-tt6xI4LghGVNCdQQ21xEWZgZk8
+Content-Type: application/json
