@@ -42,7 +42,7 @@ router.get("/", backendMiddleware, async (req, res) => {
 
 // Get purchases by client id
 router.get("/:client_id", backendMiddleware, async (req, res) => {
-  const client = await Client.findById(req.params.client_id);
+  const client = await Client.findOneWithDeleted({ _id: req.params.client_id });
   if (client) {
     const purchases = await Purchase.find({ buyer_id: req.params.client_id });
     if (purchases.length == 0) {
