@@ -78,19 +78,7 @@ router.get("/detail/:property_id", async (req, res) => {
   // });
 });
 
-/** Get properties with filters:
- * Type of property: "Home" or "Office"
- * Type of home: "Flat/Apartment", "House", "Duplex", "Penthouse"
- * numBedrooms: "1", "2", "3", "4 or +"
- * numBathrooms: "1", "2", "3 or +"
- * Equipment: "Indifferent", "Fully fitted kitchen", "Furnished"
- * Condition: "New", "Good condition", "Needs renovation"
- * Building use: "Private", "Co-working", "Security System"
- * Price: min and max
- * Location: latitude and longitude
- * publicationDate: last 24h, last week, last month
- * Services: "Pets allowed", "Lift", "Air conditioning", "Garden", "Swimming pool", "Terrace"
- */
+// Get properties with filters
 router.get("/filter", async (req, res) => {
   const url = new URL(
     "http://" + config.app.nodeServerDomain + req.originalUrl
