@@ -9,7 +9,7 @@
     "dev": "npx nodemon",
     "migrate": "node src/database/migration.js",
     "test": "jest --testEnvironment=node --verbose --watchAll",
-    "test-coverage": "jest --coverage"
+    "test-coverage": "jest --testEnvironment=node --verbose --coverage"
   },
   "author": "",
   "license": "ISC",
