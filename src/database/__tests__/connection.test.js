@@ -1,4 +1,7 @@
+// Import dependencies
 import mongoose from "mongoose";
+
+// Import connection files
 import Database from "../connection.js";
 
 describe("Test the database connection", () => {
