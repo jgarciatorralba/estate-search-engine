@@ -4,9 +4,9 @@ import path from "path";
 // Import dependencies
 import express from "express";
 
-// Import models
-import Purchase from "../models/Purchase.js";
-import Client from "../models/Client.js";
+// Import controllers
+import clientController from "../controllers/client.js";
+import purchaseController from "../controllers/purchase.js";
 
 // Import project files
 import config from "../config/app-config.js";
@@ -17,7 +17,7 @@ const router = express.Router();
 
 // Get all purchase history
 router.get("/", backendMiddleware, async (req, res) => {
-  let clients = await Client.findWithDeleted({});
+  let clients = await clientController.findAllWithDeleted();
   clients.forEach((client) => {
     client._doc.avatar =
       "http://" +
@@ -28,7 +28,7 @@ router.get("/", backendMiddleware, async (req, res) => {
         client._doc.avatar
       );
   });
-  let purchases = await Purchase.find({});
+  let purchases = await purchaseController.findAll();
   purchases.forEach((purchase) => {
     clients.forEach((client) => {
       if (client._id.id.toString("hex") == purchase.buyer_id) {
@@ -42,9 +42,13 @@ router.get("/", backendMiddleware, async (req, res) => {
 
 // Get purchases by client id
 router.get("/:client_id", backendMiddleware, async (req, res) => {
-  const client = await Client.findOneWithDeleted({ _id: req.params.client_id });
+  const client = await clientController.findWithDeletedById(
+    req.params.client_id
+  );
   if (client) {
-    const purchases = await Purchase.find({ buyer_id: req.params.client_id });
+    const purchases = await purchaseController.findPurchasesByBuyerId(
+      req.params.client_id
+    );
     if (purchases.length == 0) {
       res.json({ data: "No purchase history for that client", error: null });
     } else {
@@ -71,64 +75,29 @@ router.get("/:client_id", backendMiddleware, async (req, res) => {
 
 // Post new purchase by client
 router.post("/", authMiddleware, async (req, res) => {
-  const buyer_id = req.user.id;
-  const description = req.body.description;
-  const price = req.body.price;
-  const images = req.body.images;
-  const services = req.body.services;
-  const location = req.body.location;
-  const publicationDate = Date.parse(req.body.publicationDate);
-  const propertyType = req.body.propertyType;
-  let homeType = "";
-  let numBedrooms = "";
-  let numBathrooms = "";
-  let equipment = "";
-  let condition = "";
-  let buildingUse = "";
-  if (propertyType == "Home") {
-    homeType = req.body.homeType;
-    numBedrooms = req.body.numBedrooms;
-    numBathrooms = req.body.numBathrooms;
-    equipment = req.body.equipment;
-    condition = req.body.condition;
-  } else if (propertyType == "Office") {
-    buildingUse = req.body.buildingUse;
+  let purchaseObj = {};
+
+  purchaseObj.buyer_id = req.user.id;
+  purchaseObj.description = req.body.description;
+  purchaseObj.price = req.body.price;
+  purchaseObj.images = req.body.images;
+  purchaseObj.services = req.body.services;
+  purchaseObj.location = req.body.location;
+  purchaseObj.publicationDate = Date.parse(req.body.publicationDate);
+  purchaseObj.propertyType = req.body.propertyType;
+  if (purchaseObj.propertyType == "Home") {
+    purchaseObj.homeType = req.body.homeType;
+    purchaseObj.numBedrooms = req.body.numBedrooms;
+    purchaseObj.numBathrooms = req.body.numBathrooms;
+    purchaseObj.equipment = req.body.equipment;
+    purchaseObj.condition = req.body.condition;
+  } else if (purchaseObj.propertyType == "Office") {
+    purchaseObj.buildingUse = req.body.buildingUse;
   }
 
-  let newPurchase;
-  if (propertyType == "Home") {
-    newPurchase = new Purchase({
-      buyer_id: buyer_id,
-      description: description,
-      price: price,
-      propertyType: propertyType,
-      images: images,
-      services: services,
-      location: location,
-      publicationDate: publicationDate,
-      homeType: homeType,
-      numBedrooms: numBedrooms,
-      numBathrooms: numBathrooms,
-      equipment: equipment,
-      condition: condition,
-    });
-  } else if (propertyType == "Office") {
-    newPurchase = new Purchase({
-      buyer_id: buyer_id,
-      description: description,
-      price: price,
-      propertyType: propertyType,
-      images: images,
-      services: services,
-      location: location,
-      publicationDate: publicationDate,
-      buildingUse: buildingUse,
-    });
-  }
+  const error = await purchaseController.create(purchaseObj);
 
-  try {
-    await newPurchase.save();
-  } catch (error) {
+  if (error) {
     return res.status(400).json({ data: null, error: "Error: " + error });
   }
 
