@@ -16,6 +16,20 @@ connPromise
   .then(async (result) => {
     console.log(result);
 
+    for (let model of [Client, Purchase]) {
+      let list = await model.db.db
+        .listCollections({
+          name: model.collection.name,
+        })
+        .toArray();
+
+      if (list.length !== 0) {
+        await model.collection.drop();
+      } else {
+        console.log("Collection %s does not exist.", model.collection.name);
+      }
+    }
+
     const clients = [
       new Client({
         username: "admin",
