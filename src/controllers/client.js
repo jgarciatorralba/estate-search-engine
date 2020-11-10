@@ -44,6 +44,16 @@ export default {
     return deletedClient;
   },
 
+  findWithDeletedById: async function (id) {
+    const client = await Client.findOneWithDeleted({ _id: id });
+    return client;
+  },
+
+  findAllWithDeleted: async function () {
+    const allClients = await Client.findWithDeleted({});
+    return allClients;
+  },
+
   updateClientById: async function (id, clientObj) {
     try {
       await Client.updateOne({ _id: id }, clientObj);
