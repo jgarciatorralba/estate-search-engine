@@ -31,10 +31,7 @@ describe("Performing CRUD over Client model in test database", () => {
   });
 
   afterAll(async () => {
-    await mongoose.connection
-      .close()
-      .then(() => resolve("MongoDB connection closed..."))
-      .catch((error) => reject(error));
+    await mongoose.connection.close();
   });
 
   test("Create a new client", async () => {
