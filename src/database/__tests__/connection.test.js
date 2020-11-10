@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // Import connection files
 import Database from "../connection.js";
 
-describe("Test the database connection", () => {
+describe("Testing database connection", () => {
   beforeAll(async () => {
     await mongoose.connection.close();
   });
