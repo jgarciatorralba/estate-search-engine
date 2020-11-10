@@ -5,8 +5,8 @@ import path from "path";
 import express from "express";
 import bcrypt from "bcrypt";
 
-// Import models
-import Client from "../models/Client.js";
+// Import controller
+import clientController from "../controllers/client.js";
 
 // Import project files
 import config from "../config/app-config.js";
@@ -22,12 +22,7 @@ router.use(authMiddleware);
 // Get a client
 router.get("/", async (req, res) => {
   const clientId = req.user.id;
-  const client = await Client.findOne({ _id: clientId }, [
-    "_id",
-    "email",
-    "username",
-    "avatar",
-  ]);
+  const client = await clientController.findById(clientId);
   if (client) {
     client.avatar =
       "http://" +
@@ -57,14 +52,17 @@ router.patch("/", avatarMiddleware.single("avatar"), async (req, res) => {
     updatedClient.username = req.body.username;
   if (req.file) updatedClient.avatar = req.file.filename;
 
-  const deletedClient = await Client.findOneDeleted({ _id: req.user.id });
+  const deletedClient = await clientController.findDeletedById(req.user.id);
   if (deletedClient) {
-    return res.status(400).json({ data: null, error: "Client not found" });
+    return res
+      .status(400)
+      .json({ data: null, error: "Client account was deactivated" });
   } else {
-    try {
-      await Client.updateOne({ _id: req.user.id }, updatedClient);
-      res.json({ data: "Client data updated!", error: null });
-    } catch (error) {
+    const error = await clientController.updateClientById(
+      req.user.id,
+      updatedClient
+    );
+    if (error) {
       if (error.name == "MongoError") {
         if (Object.keys(error.keyValue).includes("email"))
           return res
@@ -74,17 +72,29 @@ router.patch("/", avatarMiddleware.single("avatar"), async (req, res) => {
           return res
             .status(400)
             .json({ data: null, error: "That username is already taken" });
+      } else {
+        return res
+          .status(500)
+          .json({ data: null, error: "Internal Server Error" });
       }
+    } else {
+      res.json({ data: "Client data updated!", error: null });
     }
   }
 });
 
 // Delete a client
 router.delete("/", async (req, res) => {
-  const client = await Client.findById(req.user.id);
+  const client = await clientController.findById(req.user.id);
   if (client) {
-    await client.delete();
-    res.json({ data: "Client deleted!", error: null });
+    const error = await clientController.deleteClient(client);
+    if (error) {
+      return res
+        .status(500)
+        .json({ data: null, error: "Internal Server Error" });
+    } else {
+      res.json({ data: "Client deleted!", error: null });
+    }
   } else {
     return res.status(400).json({ data: null, error: "Client not found" });
   }
