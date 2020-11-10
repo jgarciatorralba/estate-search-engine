@@ -55,6 +55,12 @@ export default {
   },
 
   deleteClient: async function (clientObj) {
-    await clientObj.delete();
+    try {
+      await clientObj.delete();
+    } catch (error) {
+      return error;
+    }
+
+    return null;
   },
 };
