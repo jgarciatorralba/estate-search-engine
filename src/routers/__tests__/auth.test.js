@@ -44,7 +44,7 @@ describe("Testing auth routes", () => {
     spyBcrypt.mockClear();
   });
 
-  test("POST login existing user", async () => {
+  test("POST - login existing user", async () => {
     expect.assertions(3);
 
     const loginObj = {
@@ -63,7 +63,7 @@ describe("Testing auth routes", () => {
     );
   });
 
-  test("POST register new user", async () => {
+  test("POST - register new user", async () => {
     expect.assertions(2);
 
     const registerObj = {
