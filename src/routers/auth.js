@@ -6,8 +6,8 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// Import models
-import Client from "../models/Client.js";
+// Import controller
+import clientController from "../controllers/client.js";
 
 // Import config object
 import config from "../config/app-config.js";
@@ -33,15 +33,13 @@ router.post("/register", async (req, res) => {
       .json({ data: null, error: "Bad Request: Missing name attribute" });
   }
 
-  const newClient = new Client({
+  const error = await clientController.create({
     email: req.body.email,
-    password: await bcrypt.hash(req.body.password, config.app.saltRounds),
+    password: req.body.password,
     username: req.body.username,
   });
 
-  try {
-    await newClient.save();
-  } catch (error) {
+  if (error) {
     if (error.name == "ValidationError") {
       return res
         .status(400)
@@ -58,12 +56,12 @@ router.post("/register", async (req, res) => {
           .json({ data: null, error: "That username is already taken" });
     }
     return res.status(500).json({ data: null, error: "Internal Server Error" });
+  } else {
+    res.json({
+      data: "Congratulations, you have been successfully registered!",
+      error: null,
+    });
   }
-
-  res.json({
-    data: "Congratulations, you have been successfully registered!",
-    error: null,
-  });
 });
 
 router.post("/login", async (req, res) => {
@@ -81,14 +79,12 @@ router.post("/login", async (req, res) => {
       .json({ data: null, error: "Bad Request: Missing password attribute" });
   }
 
-  const client = await Client.findOne({ email: credentials.email });
+  const client = await clientController.findByEmail(credentials.email);
   if (client == null)
-    return res
-      .status(400)
-      .json({
-        data: null,
-        error: "That email is not registered or was deactivated",
-      });
+    return res.status(400).json({
+      data: null,
+      error: "That email is not registered or was deactivated",
+    });
 
   const match = await bcrypt.compare(credentials.password, client.password);
   if (!match)
