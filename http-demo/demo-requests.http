@@ -23,7 +23,7 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "email" : "admin@admin.com",
+  "email" : "test@testmail.com",
   "password" : "123456"
 }
 
@@ -70,13 +70,13 @@ Authorization: Bearer 928e9861d5f1d573801e4dfd6178f55be55932627ac761944b8a66cbc7
 Content-Type: application/json
 
 ### Get purchase history by client id (use API secret instead of JWT)
-GET http://localhost:3000/purchase/5fa71515b193d301dc456612
+GET http://localhost:3000/purchase/5faa745aa44c321745ed7e07
 Authorization: Bearer 928e9861d5f1d573801e4dfd6178f55be55932627ac761944b8a66cbc7c95449
 Content-Type: application/json
 
 ### Register new purchase by client
 POST http://localhost:3000/purchase
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTcxNTE1YjE5M2QzMDFkYzQ1NjYxMiIsImlhdCI6MTYwNDc4NTQzOX0.9IlcKP5_lp2EMuyjB26M9W7EgIkMIIjYqp1SSY5eMGc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYWE3NDVhYTQ0YzMyMTc0NWVkN2UwNyIsImlhdCI6MTYwNTAyMTgwNH0.ClwBZiDYAEVwvLmSffPtjvpfiS0reykqfA_0IKlGJ0g
 Content-Type: application/json
 
 {
